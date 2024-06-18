@@ -1,14 +1,9 @@
 import express from 'express'
-import { login, logout } from './controllers/session/controller'
-import {
-  userCreate,
-  userDelete,
-  userGet,
-  userUpdate,
-} from './controllers/user/controller'
-import { validate } from './middleware/validation'
-import { loginSchema } from './controllers/session/schema'
-import { userDeleteSchema, userSchema } from './controllers/user/schema'
+import { login, logout } from './controllers/session'
+import { userCreate, userDelete, userGet, userUpdate } from './controllers/user'
+import { validate } from './middlewares/validation'
+import { loginSchema } from './schemas/session'
+import { userDeleteSchema, userSchema } from './schemas/user'
 
 export const router = express.Router()
 
