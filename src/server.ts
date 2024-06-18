@@ -3,6 +3,7 @@ import express from 'express'
 import 'dotenv/config'
 import { router } from '@/router'
 import { Sequelize } from 'sequelize'
+import bodyParser from 'body-parser'
 
 // ORM setup
 const sequelize = new Sequelize(process.env.DATABASE_URL!, {
@@ -13,7 +14,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL!, {
 const app = express()
 
 app.use(cors()) //TODO: configure
-
+app.use(bodyParser.json())
 app.use('/api', router)
 
 app.listen(process.env.APP_PORT, async () => {
