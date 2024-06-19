@@ -1,17 +1,22 @@
 import { User } from '@/models/user'
-import { UserDeleteRequestBody, UserRequestBody } from '@/schemas/user'
+import {
+  UserDeleteRequestBody,
+  UserCreateRequestBody,
+  UserGetRequestBody,
+} from '@/schemas/user'
 import { Request, Response } from 'express'
 
 interface UserCreateRequest extends Request {
-  body: UserRequestBody
+  body: UserCreateRequestBody
 }
-
 interface UserUpdateRequest extends Request {
-  body: Partial<UserRequestBody>
+  body: UserUpdateRequest
 }
-
 interface UserDeleteRequest extends Request {
   body: UserDeleteRequestBody
+}
+interface UserGetRequest extends Request {
+  body: UserGetRequestBody
 }
 
 export const userCreate = async (req: UserCreateRequest, res: Response) => {
@@ -23,20 +28,20 @@ export const userCreate = async (req: UserCreateRequest, res: Response) => {
   res.json(user)
 }
 
-export const userGet = (_req: Request, res: Response) => {
-  res.json({
-    message: 'userGet not implemted',
-  })
-}
-
 export const userUpdate = (_req: UserUpdateRequest, res: Response) => {
   res.json({
-    message: 'userUpdate not implemted',
+    message: 'userUpdate not implemented',
   })
 }
 
 export const userDelete = (_req: UserDeleteRequest, res: Response) => {
   res.json({
-    message: 'userDelete not implemted',
+    message: 'userDelete not implemented',
+  })
+}
+
+export const userGet = (_req: UserGetRequest, res: Response) => {
+  res.json({
+    message: 'userGet not implemented',
   })
 }
