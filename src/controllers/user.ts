@@ -19,9 +19,7 @@ interface UserGetRequest extends Request {
   body: UserGetRequestBody
 }
 
-export const userCreate = async (req: UserCreateRequest, res: Response) => {
-  const {} = req.body
-
+export const userCreate = async (_req: UserCreateRequest, res: Response) => {
   const user = await User.create()
   console.log(user)
 
