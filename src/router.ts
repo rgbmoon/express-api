@@ -1,9 +1,10 @@
 import express from 'express'
 import { login, logout } from './controllers/session'
-import { userCreate, userDelete, userGet, userUpdate } from './controllers/user'
+
 import { validate } from './middlewares/validation'
 import { loginSchema } from './schemas/session'
 import { userDeleteSchema, userSchema } from './schemas/user'
+import { userCreate, userDelete, userGet, userUpdate } from './controllers/user'
 
 export const router = express.Router()
 
