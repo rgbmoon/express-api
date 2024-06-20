@@ -4,7 +4,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "type-check": "tsc",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "build": "rimraf dist && tsc --noEmit false && tsc-alias",
     "start": "node dist/server.js",
     "dev": "NODE_ENV=development tsx watch src/server",
