@@ -1,16 +1,22 @@
 import { Request, Response, NextFunction } from 'express'
-import { z, ZodError } from 'zod'
+import {
+  UnknownKeysParam,
+  ZodError,
+  ZodIssue,
+  ZodObject,
+  ZodRawShape,
+} from 'zod'
 
 import { StatusCodes } from 'http-status-codes'
 
-export const validate = (schema: z.ZodObject<any, any>) => {
+export const validate = (schema: ZodObject<ZodRawShape, UnknownKeysParam>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body)
       next()
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorMessages = error.errors.map((issue: any) => ({
+        const errorMessages = error.errors.map((issue: ZodIssue) => ({
           message: `${issue.path.join('.')} is ${issue.message}`,
         }))
         res

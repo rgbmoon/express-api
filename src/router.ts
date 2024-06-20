@@ -5,7 +5,6 @@ import { validate } from './middlewares/validation'
 import { loginSchema } from './schemas/session'
 import {
   userCreateSchema,
-  userDeleteSchema,
   userGetSchema,
   userUpdateSchema,
 } from './schemas/user'
@@ -19,7 +18,7 @@ router.post('/login', validate(loginSchema), login)
 router.get('/logout', logout)
 
 // User routes
-router.post('/user', validate(userCreateSchema), userCreate)
-router.get('/user', validate(userGetSchema), userGet)
-router.put('/user', validate(userUpdateSchema), userUpdate)
-router.delete('/user', validate(userDeleteSchema), userDelete)
+router.post('/users', validate(userCreateSchema), userCreate)
+router.put('/users/:id', validate(userUpdateSchema), userUpdate)
+router.delete('/users/:id', userDelete)
+router.get('/users/:id?', validate(userGetSchema), userGet)

@@ -1,9 +1,5 @@
 import { User } from '@/models/user'
-import {
-  UserDeleteRequestBody,
-  UserCreateRequestBody,
-  UserGetRequestBody,
-} from '@/schemas/user'
+import { UserCreateRequestBody, UserGetRequestBody } from '@/schemas/user'
 import { Request, Response } from 'express'
 
 interface UserCreateRequest extends Request {
@@ -12,16 +8,22 @@ interface UserCreateRequest extends Request {
 interface UserUpdateRequest extends Request {
   body: UserUpdateRequest
 }
-interface UserDeleteRequest extends Request {
-  body: UserDeleteRequestBody
-}
 interface UserGetRequest extends Request {
   body: UserGetRequestBody
 }
 
-export const userCreate = async (_req: UserCreateRequest, res: Response) => {
-  const user = await User.create()
-  console.log(user)
+// TODO:
+// 1 - Finish creation and check user exists
+// 2 - Finish other methods
+// 3 - Test Finished Api
+
+export const userCreate = async (req: UserCreateRequest, res: Response) => {
+  const { firstName, email, isAdmin } = req.body
+
+  // TODO: temporary, change to migration
+  await User.sync({ force: false })
+
+  const user = await User.create({ firstName, email, isAdmin })
 
   res.json(user)
 }
@@ -32,14 +34,14 @@ export const userUpdate = (_req: UserUpdateRequest, res: Response) => {
   })
 }
 
-export const userDelete = (_req: UserDeleteRequest, res: Response) => {
+export const userDelete = (_req: Request, res: Response) => {
   res.json({
     message: 'userDelete not implemented',
   })
 }
 
-export const userGet = (_req: UserGetRequest, res: Response) => {
-  res.json({
-    message: 'userGet not implemented',
-  })
+export const userGet = async (_req: UserGetRequest, res: Response) => {
+  const users = await User.findAll()
+
+  res.json(users)
 }
