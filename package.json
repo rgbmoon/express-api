@@ -1,15 +1,14 @@
 {
   "name": "express-api",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "server.ts",
   "type": "module",
   "scripts": {
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
     "build": "rimraf dist && tsc --noEmit false && tsc-alias",
-    "start": "node dist/server.js",
-    "dev": "NODE_ENV=development tsx watch src/server",
-    "prepare": "husky"
+    "dev": "tsx watch src/index",
+    "prepare": "husky",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "husky": {
     "hooks": {
