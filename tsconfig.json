@@ -3,7 +3,8 @@
     "target": "esnext",
     "esModuleInterop": true,
     "strict": true,
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noEmit": true,
 
     "outDir": "dist",
