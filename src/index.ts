@@ -8,7 +8,7 @@ import { POSTGRES_URI } from './constants/api.js'
 
 export const start = () => {
   // ORM setup
-  const sequelize = new Sequelize(POSTGRES_URI!, {
+  const sequelize = new Sequelize(POSTGRES_URI, {
     logging: console.log,
   })
 

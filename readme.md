@@ -1,3 +1,4 @@
 # EXPRESS API
 
-Express API education project
+Express.js RESTful API pet project with typescript, sequelize and postgres
+Deployed with Vercel

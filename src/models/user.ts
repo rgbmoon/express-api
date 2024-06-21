@@ -1,7 +1,7 @@
-import { POSTGRES_URI } from '@/constants/api.js'
 import { DataTypes, ModelDefined, Optional, Sequelize } from 'sequelize'
+import { POSTGRES_URI } from 'src/constants/api.js'
 
-const sequelize = new Sequelize(POSTGRES_URI!)
+const sequelize = new Sequelize(POSTGRES_URI)
 
 export interface UserAttributes {
   id: number

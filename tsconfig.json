@@ -5,21 +5,14 @@
     "strict": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "noEmit": true,
-
     "outDir": "dist",
-
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "baseUrl": "."
   },
   "tsc-alias": {
     "resolveFullPaths": true,
