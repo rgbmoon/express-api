@@ -1,5 +1,4 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/dist" }],
-  "devCommand": "node"
+  "rewrites": [{ "source": "/(.*)", "destination": "/dist" }]
 }
