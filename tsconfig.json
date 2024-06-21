@@ -5,7 +5,7 @@
     "strict": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "dist",
+    "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
