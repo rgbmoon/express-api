@@ -17,6 +17,7 @@ export const userCreateSchema = z.object({
 export const userUpdateSchema = userCreateSchema.partial()
 
 // TODO: make search and pagination params in shared schema and implement here
+// Plus make filters and sort
 export const userGetSchema = z.object({
   id: z.string().optional(),
 })

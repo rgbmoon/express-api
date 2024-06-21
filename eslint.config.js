@@ -8,8 +8,6 @@ export default [
     languageOptions: {
       globals: globals.node,
     },
-    // TODO: fix dist folder ignore
-    ignores: ['.dist/**/'],
     rules: {
       'prettier/prettier': [
         'error',
@@ -19,6 +17,9 @@ export default [
         },
       ],
     },
+  },
+  {
+    ignores: ['**/dist/*', 'tsconfig.json'],
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,

@@ -1,4 +1,4 @@
-import { start } from '../src/index.js'
+import { start } from '../dist/index.js'
 
 import 'pg'
 
