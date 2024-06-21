@@ -1,5 +1,4 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
-  "installCommand": "npm cache clear --force && npm install --legacy-peer-deps"
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
