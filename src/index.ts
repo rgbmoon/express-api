@@ -3,11 +3,12 @@ import express from 'express'
 import 'dotenv/config'
 
 import { Sequelize } from 'sequelize'
-import { router } from './router.js'
+import { router } from './routers/router.js'
+import { POSTGRES_URI } from './constants/api.js'
 
 export const serverStart = () => {
   // ORM setup
-  const sequelize = new Sequelize(process.env.POSTGRES_URL!, {
+  const sequelize = new Sequelize(POSTGRES_URI!, {
     logging: console.log,
   })
 
