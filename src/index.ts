@@ -6,7 +6,7 @@ import { Sequelize } from 'sequelize'
 
 export const serverStart = () => {
   // ORM setup
-  const sequelize = new Sequelize(process.env.DATABASE_URL!, {
+  const sequelize = new Sequelize(process.env.POSTGRES_URL!, {
     logging: console.log,
   })
 
