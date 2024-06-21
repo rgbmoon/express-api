@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && tsc --noEmit false && tsc-alias",
+    "build": "tsc --noEmit && tsc-alias",
     "dev": "tsx watch api/index",
     "prepare": "husky",
     "lint": "eslint",
