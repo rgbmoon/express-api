@@ -1,3 +1,3 @@
-import { serverStart } from '../src'
+import { serverStart } from '../dist'
 
 serverStart()
