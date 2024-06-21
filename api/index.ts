@@ -1,3 +1,3 @@
-import { serverStart } from '../dist'
+import { serverStart } from '../dist/index.js'
 
 serverStart()
