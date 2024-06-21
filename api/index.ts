@@ -1,5 +1,5 @@
-import { serverStart } from '../dist/index.js'
+import { start } from '../src/index.js'
 
 import 'pg'
 
-serverStart()
+start()

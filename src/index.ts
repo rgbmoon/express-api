@@ -6,7 +6,7 @@ import { Sequelize } from 'sequelize'
 import { router } from './routers/router.js'
 import { POSTGRES_URI } from './constants/api.js'
 
-export const serverStart = () => {
+export const start = () => {
   // ORM setup
   const sequelize = new Sequelize(POSTGRES_URI!, {
     logging: console.log,
