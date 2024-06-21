@@ -1,5 +1,5 @@
 import { DataTypes, ModelDefined, Optional, Sequelize } from 'sequelize'
-import { POSTGRES_URI } from 'src/constants/api.js'
+import { POSTGRES_URI } from '../constants/api.js'
 
 const sequelize = new Sequelize(POSTGRES_URI)
 

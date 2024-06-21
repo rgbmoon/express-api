@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { User } from 'src/models/user.js'
-import { UserCreateRequestBody, UserGetRequestBody } from 'src/schemas/user.js'
+import { User } from '../models/user.js'
+import { UserCreateRequestBody, UserGetRequestBody } from '../schemas/user.js'
 
 interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
