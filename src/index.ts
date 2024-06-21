@@ -18,6 +18,11 @@ export const serverStart = () => {
   app.use(express.static('public'))
   app.use('/api', router)
 
+  // TODO: tmp
+  app.get('/', (_req, res) => {
+    res.send('Hello World!')
+  })
+
   app.listen(process.env.APP_PORT, async () => {
     try {
       await sequelize.authenticate()

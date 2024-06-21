@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --noEmit && tsc-alias",
-    "dev": "tsx watch api/index",
+    "dev": "tsx watch api/index.ts",
     "prepare": "husky",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
