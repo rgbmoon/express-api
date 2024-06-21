@@ -1,11 +1,11 @@
 {
   "name": "express-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --noEmit && tsc-alias",
+    "build": "tsc && tsc-alias",
     "dev": "tsx watch api/index.ts",
     "prepare": "husky",
     "lint": "eslint",
