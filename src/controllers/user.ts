@@ -22,10 +22,6 @@ interface UserGetRequest extends Request {
   body: UserGetRequestBody
 }
 
-// TODO:
-// 2 - Finish other methods
-// 3 - Test Api
-
 export const userCreate = async (req: UserCreateRequest, res: Response) => {
   const { firstName, email, isAdmin, lastName } = req.body
 
@@ -98,8 +94,23 @@ export const userDelete = async (req: UserDeleteRequest, res: Response) => {
   })
 }
 
-export const userGet = async (_req: UserGetRequest, res: Response) => {
-  // TODO: get by id
+export const userGet = async (req: UserGetRequest, res: Response) => {
+  const {
+    params: { id },
+  } = req
+
+  // TODO: change to default filters/sort
+  if (id) {
+    const user = await User.findByPk(id)
+
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: `Пользователь не найден` })
+    }
+
+    return res.json(user)
+  }
 
   const users = await User.findAll()
 
