@@ -6,20 +6,22 @@ import {
   userUpdateRequestBody,
 } from '../schemas/user.js'
 import { StatusCodes } from 'http-status-codes'
+import { BaseQueryParams } from '../types/shared.js'
 
 interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
 }
 interface UserUpdateRequest extends Request {
-  params: { id: string }
   body: userUpdateRequestBody
+  params: { id: string }
 }
 interface UserDeleteRequest extends Request {
   params: { id: string }
 }
 interface UserGetRequest extends Request {
-  params: { id: string }
   body: UserGetRequestBody
+  params: { id: string }
+  query: BaseQueryParams
 }
 
 export const userCreate = async (req: UserCreateRequest, res: Response) => {
@@ -97,9 +99,9 @@ export const userDelete = async (req: UserDeleteRequest, res: Response) => {
 export const userGet = async (req: UserGetRequest, res: Response) => {
   const {
     params: { id },
+    // query: { search, sort, limit, offset },
   } = req
 
-  // TODO: change to default filters/sort
   if (id) {
     const user = await User.findByPk(id)
 
@@ -112,6 +114,7 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
     return res.json(user)
   }
 
+  // TODO: make filters/sort/find/pagination
   const users = await User.findAll()
 
   res.json(users)

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { filtersBaseSchema } from './shared.js'
 
 export type UserCreateRequestBody = z.infer<typeof userCreateSchema>
 export type userUpdateRequestBody = z.infer<typeof userUpdateSchema>
@@ -16,8 +17,6 @@ export const userCreateSchema = z.object({
 
 export const userUpdateSchema = userCreateSchema.partial()
 
-// TODO: make search and pagination params in shared schema and implement here
-// Plus make filters and sort
 export const userGetSchema = z.object({
-  id: z.string().optional(),
+  filters: filtersBaseSchema.optional(),
 })
