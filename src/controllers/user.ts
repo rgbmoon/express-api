@@ -7,6 +7,7 @@ import {
 } from '../schemas/user.js'
 import { StatusCodes } from 'http-status-codes'
 import { BaseQueryParams } from '../types/shared.js'
+import { Order } from 'sequelize'
 
 interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
@@ -99,7 +100,8 @@ export const userDelete = async (req: UserDeleteRequest, res: Response) => {
 export const userGet = async (req: UserGetRequest, res: Response) => {
   const {
     params: { id },
-    // query: { search, sort, limit, offset },
+    query: { limit, offset },
+    body: { order },
   } = req
 
   if (id) {
@@ -114,8 +116,28 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
     return res.json(user)
   }
 
-  // TODO: make filters/sort/find/pagination
-  const users = await User.findAll()
+  const orderConditions: Order = Object.keys(order ?? {}).map((key) => {
+    return [key, order![key as keyof typeof order]]
+  })
+
+  // TODO: finish search, filters, make body mapper helper
+
+  // const filtersConditions = Object.keys(filters ?? {}).reduce((acc, key) => {
+  //   acc[key] = {}
+  //   return acc
+  // }, {} as WhereOptions<UserModelAttributes>)
+
+  const users = await User.findAll({
+    order: orderConditions,
+    // where: {
+    //   fullName: {
+    //     [Op.iLike]: `$${search}$`,
+    //   },
+    //   // ...filtersConditions,
+    // },
+    limit: limit ? Number(limit) : undefined,
+    offset: offset ? Number(offset) : undefined,
+  })
 
   res.json(users)
 }

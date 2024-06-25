@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { filtersBaseSchema } from './shared.js'
+import { filtersBaseSchema, orderBaseSchema } from './shared.js'
 
 export type UserCreateRequestBody = z.infer<typeof userCreateSchema>
 export type userUpdateRequestBody = z.infer<typeof userUpdateSchema>
@@ -19,4 +19,5 @@ export const userUpdateSchema = userCreateSchema.partial()
 
 export const userGetSchema = z.object({
   filters: filtersBaseSchema.optional(),
+  order: orderBaseSchema.optional(),
 })
