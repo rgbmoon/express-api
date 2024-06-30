@@ -4,7 +4,6 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  ModelGetterOptions,
   Sequelize,
 } from 'sequelize'
 import { POSTGRES_URI } from '../constants/api.js'
@@ -23,7 +22,6 @@ export interface UserModel
   // TODO store password safely
   // password: string
   img?: string
-  fullName?: ModelGetterOptions<UserModel>
 }
 
 export const User = sequelize.define<UserModel>('User', {
@@ -50,11 +48,5 @@ export const User = sequelize.define<UserModel>('User', {
   },
   img: {
     type: DataTypes.STRING,
-  },
-  fullName: {
-    type: DataTypes.STRING,
-    get() {
-      return [this.firstName, this.lastName].join(' ').trim()
-    },
   },
 })

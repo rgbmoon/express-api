@@ -7,7 +7,6 @@ import {
 } from '../schemas/user.js'
 import { StatusCodes } from 'http-status-codes'
 import { BaseQueryParams } from '../types/shared.js'
-import { Order } from 'sequelize'
 
 interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
@@ -101,7 +100,6 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
   const {
     params: { id },
     query: { limit, offset },
-    body: { order },
   } = req
 
   if (id) {
@@ -116,25 +114,31 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
     return res.json(user)
   }
 
-  const orderConditions: Order = Object.keys(order ?? {}).map((key) => {
-    return [key, order![key as keyof typeof order]]
-  })
+  // TODO: bind order typing to model
+  // const orderConditions: Order = Object.keys(order ?? {}).map((key) => {
+  //   return [key, order![key as keyof typeof order]]
+  // })
 
-  // TODO: finish search, filters, make body mapper helper
+  // TODO: body mapper helper for search & filters
 
+  // TODO: make filters typing
   // const filtersConditions = Object.keys(filters ?? {}).reduce((acc, key) => {
-  //   acc[key] = {}
+  //   console.log(filters?.[key as keyof typeof filters])
+  //   // acc[key] = filters?.[key as keyof typeof filters]
   //   return acc
-  // }, {} as WhereOptions<UserModelAttributes>)
+  // }, {} as WhereOptions)
+
+  // if (search) {
+  //   filtersConditions[typeof Op.or] = [
+  //     { firstName: { [Op.iLike]: `%${search}%` } },
+  //     { lastName: { [Op.iLike]: `%${search}%` } },
+  //     { email: { [Op.iLike]: `%${search}%` } },
+  //   ]
+  // }
 
   const users = await User.findAll({
-    order: orderConditions,
-    // where: {
-    //   fullName: {
-    //     [Op.iLike]: `$${search}$`,
-    //   },
-    //   // ...filtersConditions,
-    // },
+    // order: orderConditions,
+    // where: filtersConditions,
     limit: limit ? Number(limit) : undefined,
     offset: offset ? Number(offset) : undefined,
   })
