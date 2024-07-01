@@ -7,6 +7,7 @@ import {
 } from '../schemas/user.js'
 import { StatusCodes } from 'http-status-codes'
 import { BaseQueryParams } from '../types/shared.js'
+import { Op, Order, WhereOptions } from 'sequelize'
 
 interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
@@ -99,7 +100,8 @@ export const userDelete = async (req: UserDeleteRequest, res: Response) => {
 export const userGet = async (req: UserGetRequest, res: Response) => {
   const {
     params: { id },
-    query: { limit, offset },
+    query: { search, limit, offset },
+    body: { order, filters },
   } = req
 
   if (id) {
@@ -114,31 +116,35 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
     return res.json(user)
   }
 
-  // TODO: bind order typing to model
-  // const orderConditions: Order = Object.keys(order ?? {}).map((key) => {
-  //   return [key, order![key as keyof typeof order]]
-  // })
+  const orderConditions: Order = Object.keys(order ?? {}).map((key) => {
+    return [key, order![key as keyof typeof order]]
+  })
 
   // TODO: body mapper helper for search & filters
 
-  // TODO: make filters typing
-  // const filtersConditions = Object.keys(filters ?? {}).reduce((acc, key) => {
-  //   console.log(filters?.[key as keyof typeof filters])
-  //   // acc[key] = filters?.[key as keyof typeof filters]
-  //   return acc
-  // }, {} as WhereOptions)
+  let filtersConditions: WhereOptions = {}
 
-  // if (search) {
-  //   filtersConditions[typeof Op.or] = [
-  //     { firstName: { [Op.iLike]: `%${search}%` } },
-  //     { lastName: { [Op.iLike]: `%${search}%` } },
-  //     { email: { [Op.iLike]: `%${search}%` } },
-  //   ]
-  // }
+  if (search) {
+    // TODO: fix Op as keys typing
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    filtersConditions[Op.or] = [
+      { firstName: { [Op.iLike]: `%${search}%` } },
+      { lastName: { [Op.iLike]: `%${search}%` } },
+      { email: { [Op.iLike]: `%${search}%` } },
+    ]
+  }
+
+  // TODO: make filters and typing
+  filtersConditions = Object.keys(filters ?? {}).reduce((acc, key) => {
+    console.log(filters?.[key as keyof typeof filters])
+    // acc[key] = filters?.[key as keyof typeof filters]
+    return acc
+  }, filtersConditions)
 
   const users = await User.findAll({
-    // order: orderConditions,
-    // where: filtersConditions,
+    order: orderConditions,
+    where: filtersConditions,
     limit: limit ? Number(limit) : undefined,
     offset: offset ? Number(offset) : undefined,
   })
