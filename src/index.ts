@@ -20,6 +20,8 @@ export const start = () => {
   app.use(express.static('public'))
   app.use('/api', router)
 
+  // TODO: add swagger & open-api codegen
+
   app.listen(process.env.APP_PORT, async () => {
     try {
       await sequelize.authenticate()

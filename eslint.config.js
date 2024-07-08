@@ -16,6 +16,7 @@ export default [
           usePrettierrc: true,
         },
       ],
+      'no-unused-vars': 'off',
     },
   },
   {

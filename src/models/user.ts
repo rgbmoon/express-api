@@ -17,36 +17,49 @@ export interface UserModel
   id: CreationOptional<number>
   firstName: string
   email: string
+  passwordHash: string
   isAdmin: boolean
   lastName?: string
-  // TODO store password safely
-  // password: string
   img?: string
 }
 
-export const User = sequelize.define<UserModel>('User', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    allowNull: false,
+export const User = sequelize.define<UserModel>(
+  'User',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+    passwordHash: {
+      type: DataTypes.STRING,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+    },
+    img: {
+      type: DataTypes.STRING,
+    },
   },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  isAdmin: {
-    type: DataTypes.BOOLEAN,
-  },
-  lastName: {
-    type: DataTypes.STRING,
-  },
-  img: {
-    type: DataTypes.STRING,
-  },
-})
+  {
+    defaultScope: {
+      attributes: { exclude: ['passwordHash'] },
+    },
+    scopes: {
+      withPassword: {},
+    },
+  }
+)

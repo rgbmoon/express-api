@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
+export type LoginRequestBody = z.infer<typeof loginSchema>
+
 export const loginSchema = z.object({
-  username: z.string().min(1),
-  password: z.string().min(3),
+  email: z.string().email(),
+  password: z.string().min(4),
 })

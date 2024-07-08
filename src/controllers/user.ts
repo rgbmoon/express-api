@@ -8,6 +8,7 @@ import {
 import { StatusCodes } from 'http-status-codes'
 import { BaseQueryParams } from '../types/shared.js'
 import { Op, Order, WhereOptions } from 'sequelize'
+import { hash } from 'bcrypt'
 
 interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
@@ -26,14 +27,22 @@ interface UserGetRequest extends Request {
 }
 
 export const userCreate = async (req: UserCreateRequest, res: Response) => {
-  const { firstName, email, isAdmin, lastName } = req.body
+  const { firstName, email, password, isAdmin, lastName } = req.body
 
   // TODO: temporary, change to migration
   await User.sync({ force: false })
 
+  const passwordHash = await hash(password, 10)
+
   const [user, isCreated] = await User.findOrCreate({
     where: { email },
-    defaults: { firstName, email, isAdmin, lastName },
+    defaults: {
+      firstName,
+      email,
+      passwordHash,
+      isAdmin,
+      lastName,
+    },
   })
 
   if (!isCreated) {
@@ -42,9 +51,10 @@ export const userCreate = async (req: UserCreateRequest, res: Response) => {
       .json({ error: `Email ${email} занят другим пользователем` })
   }
 
-  // TODO: handle incoming password
+  // we need to reload instance to apply default user scope that excludes passwordHash field
+  await user.reload()
 
-  res.json(user)
+  return res.json(user)
 }
 
 export const userUpdate = async (req: UserUpdateRequest, res: Response) => {
@@ -62,7 +72,7 @@ export const userUpdate = async (req: UserUpdateRequest, res: Response) => {
   }
 
   const overlapUser = await User.findOne({
-    where: { email: body.email },
+    where: { email: body.email ?? '' },
   })
 
   if (overlapUser) {
@@ -71,10 +81,16 @@ export const userUpdate = async (req: UserUpdateRequest, res: Response) => {
       .json({ error: `Email ${body.email} занят другим пользователем` })
   }
 
-  await user.update(body)
-  await user.save()
+  if (body.password) {
+    const passwordHash = await hash(body.password, 10)
+    await user.update({ passwordHash })
+    // we need to reload instance to apply default user scope that excludes passwordHash field
+    await user.reload()
+  }
 
-  res.json(user)
+  await user.update(body)
+
+  return res.json(user)
 }
 
 export const userDelete = async (req: UserDeleteRequest, res: Response) => {
@@ -92,8 +108,8 @@ export const userDelete = async (req: UserDeleteRequest, res: Response) => {
 
   await user.destroy()
 
-  res.json({
-    message: 'success',
+  return res.json({
+    message: `user ${user.id} deleted`,
   })
 }
 
@@ -149,5 +165,5 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
     offset: offset ? Number(offset) : undefined,
   })
 
-  res.json(users)
+  return res.json(users)
 }
