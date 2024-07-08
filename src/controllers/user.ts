@@ -109,7 +109,7 @@ export const userDelete = async (req: UserDeleteRequest, res: Response) => {
   await user.destroy()
 
   return res.json({
-    message: `user ${user.id} deleted`,
+    message: `user ${user.userId} deleted`,
   })
 }
 

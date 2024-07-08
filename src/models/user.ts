@@ -14,7 +14,7 @@ export type UserModelAttributes = InferAttributes<UserModel>
 export type UserModelCreationAttributes = InferCreationAttributes<UserModel>
 export interface UserModel
   extends Model<UserModelAttributes, UserModelCreationAttributes> {
-  id: CreationOptional<number>
+  userId: CreationOptional<number>
   firstName: string
   email: string
   passwordHash: string
@@ -26,7 +26,7 @@ export interface UserModel
 export const User = sequelize.define<UserModel>(
   'User',
   {
-    id: {
+    userId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,

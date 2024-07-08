@@ -3,6 +3,8 @@ import { LoginRequestBody } from '../schemas/session.js'
 import { compare } from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 import { User } from '../models/user.js'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET } from '../constants/api.js'
 
 interface LoginRequest extends Request {
   body: LoginRequestBody
@@ -31,8 +33,13 @@ export const login = async (req: LoginRequest, res: Response) => {
       .json({ error: `Неверный пароль` })
   }
 
+  const token = jwt.sign({ userId: user.userId }, JWT_SECRET!, {
+    expiresIn: '6h',
+  })
+
   return res.json({
-    message: 'login successful',
+    userId: user.userId,
+    token,
   })
 }
 
