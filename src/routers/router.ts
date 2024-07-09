@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { login, logout } from '../controllers/session.js'
+import { login } from '../controllers/session.js'
 import { validate } from '../middlewares/validation.js'
 import { loginSchema } from '../schemas/session.js'
 import {
@@ -20,8 +20,6 @@ export const router = express.Router()
 
 // Session routes
 router.post('/login', validate(loginSchema), login)
-
-router.get('/logout', logout)
 
 // TODO: authorizeAdmin middleware add, add userId in admin request schemas
 

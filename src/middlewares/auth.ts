@@ -9,21 +9,22 @@ export const authorize = (req: Request, res: Response, next: NextFunction) => {
       headers: { authorization },
     } = req
 
-    if (!authorization) {
+    const token = authorization?.split(' ')[1]
+
+    if (!token) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ error: 'Not authorized' })
     }
 
     try {
-      jwt.verify(authorization, JWT_SECRET!)
+      jwt.verify(token, JWT_SECRET!)
+      next()
     } catch (error) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ error: 'Invalid token' })
     }
-
-    next()
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)

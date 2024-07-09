@@ -42,9 +42,3 @@ export const login = async (req: LoginRequest, res: Response) => {
     token,
   })
 }
-
-export const logout = (_req: Request, res: Response) => {
-  return res.json({
-    message: 'logged out',
-  })
-}
