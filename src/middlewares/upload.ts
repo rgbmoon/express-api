@@ -44,6 +44,7 @@ export const uploadImg = (req: Request, res: Response, next: NextFunction) => {
           res.status(StatusCodes.BAD_REQUEST).json({ error })
           break
         default:
+          console.error(FILE_UPLOAD_ERRORS.UNKNOWN, error)
           res
             .status(StatusCodes.INTERNAL_SERVER_ERROR)
             .json({ error: FILE_UPLOAD_ERRORS.UNKNOWN })
