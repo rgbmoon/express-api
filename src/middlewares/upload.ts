@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import multer from 'multer'
-// import { mkdirSync } from 'fs'
+import { mkdirSync } from 'fs'
 import { FILE_UPLOAD_ERRORS } from '../constants/common.js'
 import filenamify from 'filenamify'
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    // mkdirSync('static/images', { recursive: true })
+    mkdirSync('tmp/images', { recursive: true })
 
-    cb(null, 'static/images/')
+    cb(null, 'tmp/images/')
   },
   filename: (_req, file, cb) => {
     cb(null, Date.now() + '-' + filenamify(file.originalname))

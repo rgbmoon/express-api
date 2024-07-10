@@ -2,7 +2,7 @@
 
 .env
 /dist
-/static
+/tmp
 
 .DS_Store
 .env.local

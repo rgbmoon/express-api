@@ -17,7 +17,7 @@ export const start = () => {
 
   app.use(cors()) //TODO: configure
   app.use(express.json())
-  app.use('/static', express.static('static'))
+  app.use('/tmp', express.static('tmp'))
   app.use('/api', router)
 
   // TODO: add swagger & open-api codegen
