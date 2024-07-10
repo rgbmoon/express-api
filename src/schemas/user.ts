@@ -11,8 +11,7 @@ export const userCreateSchema = z.object({
   password: z.string().min(4),
   isAdmin: z.boolean(),
   lastName: z.string().min(1).optional(),
-  // TODO: make file upload middleware
-  // img: z.string().optional(),
+  img: z.string().optional(),
 })
 
 export const userUpdateSchema = userCreateSchema.partial()

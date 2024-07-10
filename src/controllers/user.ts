@@ -27,7 +27,10 @@ interface UserGetRequest extends Request {
 }
 
 export const userCreate = async (req: UserCreateRequest, res: Response) => {
-  const { firstName, email, password, isAdmin, lastName } = req.body
+  const {
+    body: { firstName, email, password, isAdmin, lastName },
+    file,
+  } = req
 
   // TODO: temporary, change to migration
   await User.sync({ force: false })
@@ -51,6 +54,10 @@ export const userCreate = async (req: UserCreateRequest, res: Response) => {
       .json({ error: `Email ${email} занят другим пользователем` })
   }
 
+  if (file) {
+    await user.update({ img: file.path })
+  }
+
   // we need to reload instance to apply default user scope that excludes passwordHash field
   await user.reload()
 
@@ -61,6 +68,7 @@ export const userUpdate = async (req: UserUpdateRequest, res: Response) => {
   const {
     params: { id },
     body,
+    file,
   } = req
 
   const user = await User.findByPk(id)
@@ -86,6 +94,10 @@ export const userUpdate = async (req: UserUpdateRequest, res: Response) => {
     await user.update({ passwordHash })
     // we need to reload instance to apply default user scope that excludes passwordHash field
     await user.reload()
+  }
+
+  if (file) {
+    await user.update({ img: file.path })
   }
 
   await user.update(body)

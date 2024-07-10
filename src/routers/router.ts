@@ -15,6 +15,7 @@ import {
   userUpdate,
 } from '../controllers/user.js'
 import { authorize } from '../middlewares/auth.js'
+import { uploadImg } from '../middlewares/upload.js'
 
 export const router = express.Router()
 
@@ -24,9 +25,17 @@ router.post('/login', validate(loginSchema), login)
 // TODO: authorizeAdmin middleware add, add userId in admin request schemas
 
 // User routes
-router.post('/users', [authorize, validate(userCreateSchema)], userCreate)
+router.post(
+  '/users',
+  [authorize, validate(userCreateSchema), uploadImg],
+  userCreate
+)
 
-router.put('/users/:id', [authorize, validate(userUpdateSchema)], userUpdate)
+router.put(
+  '/users/:id',
+  [authorize, validate(userUpdateSchema), uploadImg],
+  userUpdate
+)
 
 router.delete('/users/:id', authorize, userDelete)
 

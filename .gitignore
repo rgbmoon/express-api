@@ -2,6 +2,7 @@
 
 .env
 /dist
+/public
 
 .DS_Store
 .env.local

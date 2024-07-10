@@ -17,7 +17,7 @@ export const start = () => {
 
   app.use(cors()) //TODO: configure
   app.use(express.json())
-  app.use(express.static('public'))
+  app.use('/public', express.static('public'))
   app.use('/api', router)
 
   // TODO: add swagger & open-api codegen
@@ -25,7 +25,7 @@ export const start = () => {
   app.listen(process.env.APP_PORT, async () => {
     try {
       await sequelize.authenticate()
-      // TODO: temporary
+      // TODO: make DB migrations
       // await sequelize.sync({ force: true })
       console.log('Connection has been established successfully.')
     } catch (error) {
