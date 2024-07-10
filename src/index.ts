@@ -17,7 +17,7 @@ export const start = () => {
 
   app.use(cors()) //TODO: configure
   app.use(express.json())
-  app.use('/tmp', express.static('tmp'))
+  app.use('/tmp', express.static('tmp')) // TODO: finish files vercel upload
   app.use('/api', router)
 
   // TODO: add swagger & open-api codegen
