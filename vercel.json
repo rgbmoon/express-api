@@ -1,5 +1,11 @@
 {
   "version": 2,
   "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
-  "installCommand": "yarn install"
+  "installCommand": "yarn install",
+  "builds": [
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ]
 }

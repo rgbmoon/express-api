@@ -7,13 +7,9 @@ import filenamify from 'filenamify'
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    try {
-      mkdirSync(process.cwd() + '/static/images', { recursive: true })
-    } catch (error) {
-      /* empty */
-    }
+    mkdirSync('public/images', { recursive: true })
 
-    cb(null, 'static/images/')
+    cb(null, 'public/images/')
   },
   filename: (_req, file, cb) => {
     cb(null, Date.now() + '-' + filenamify(file.originalname))
