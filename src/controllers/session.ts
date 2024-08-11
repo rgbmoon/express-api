@@ -37,10 +37,11 @@ export const login = async (req: LoginRequest, res: Response) => {
     expiresIn: '6h',
   })
 
-  const { passwordHash, ...filteredUser } = user
+  // we need to reload instance to apply default user scope that excludes passwordHash field
+  await user.reload()
 
   return res.json({
-    user: filteredUser,
+    user,
     token,
   })
 }
