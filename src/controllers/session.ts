@@ -37,8 +37,10 @@ export const login = async (req: LoginRequest, res: Response) => {
     expiresIn: '6h',
   })
 
+  const { passwordHash, ...filteredUser } = user
+
   return res.json({
-    userId: user.userId,
+    user: filteredUser,
     token,
   })
 }
