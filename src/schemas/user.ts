@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { filtersBaseSchema, orderBaseSchema } from './shared.js'
 
 export type UserCreateRequestBody = z.infer<typeof userCreateSchema>
-export type userUpdateRequestBody = z.infer<typeof userUpdateSchema>
+export type UserUpdateRequestBody = z.infer<typeof userUpdateSchema>
 export type UserGetRequestBody = z.infer<typeof userGetSchema>
 
 export const userCreateSchema = z.object({

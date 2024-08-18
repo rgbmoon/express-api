@@ -17,7 +17,7 @@ export const start = () => {
 
   app.use(cors()) //TODO: configure
   app.use(express.json())
-  app.use('/tmp', express.static('tmp')) // TODO: finish files vercel upload
+  app.use('/tmp', express.static('tmp')) // TODO: finish files vercel upload (try vercel blob)
   app.use('/api', router)
 
   // TODO: add swagger & open-api codegen
@@ -25,8 +25,6 @@ export const start = () => {
   app.listen(process.env.APP_PORT, async () => {
     try {
       await sequelize.authenticate()
-      // TODO: make DB migrations
-      // await sequelize.sync({ force: true })
       console.log('Connection has been established successfully.')
     } catch (error) {
       console.error('Unable to connect to the database:', error)

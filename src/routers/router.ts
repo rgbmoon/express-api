@@ -16,6 +16,17 @@ import {
 } from '../controllers/user.js'
 import { authorize } from '../middlewares/auth.js'
 import { uploadImg } from '../middlewares/upload.js'
+import {
+  postCreateSchema,
+  postGetSchema,
+  postUpdateSchema,
+} from '../schemas/post.js'
+import {
+  postCreate,
+  postDelete,
+  postGet,
+  postUpdate,
+} from '../controllers/post.js'
 
 export const router = express.Router()
 
@@ -40,3 +51,12 @@ router.put(
 router.delete('/users/:id', authorize, userDelete)
 
 router.get('/users/:id?', [authorize, validate(userGetSchema)], userGet)
+
+// Post routes
+router.post('/posts', [authorize, validate(postCreateSchema)], postCreate)
+
+router.put('/posts/:id', [authorize, validate(postUpdateSchema)], postUpdate)
+
+router.delete('/posts/:id', authorize, postDelete)
+
+router.get('/posts', [authorize, validate(postGetSchema)], postGet)

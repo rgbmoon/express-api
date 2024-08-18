@@ -3,7 +3,7 @@ import { User } from '../models/user.js'
 import {
   UserCreateRequestBody,
   UserGetRequestBody,
-  userUpdateRequestBody,
+  UserUpdateRequestBody,
 } from '../schemas/user.js'
 import { StatusCodes } from 'http-status-codes'
 import { BaseQueryParams } from '../types/shared.js'
@@ -14,7 +14,7 @@ interface UserCreateRequest extends Request {
   body: UserCreateRequestBody
 }
 interface UserUpdateRequest extends Request {
-  body: userUpdateRequestBody
+  body: UserUpdateRequestBody
   params: { id: string }
 }
 interface UserDeleteRequest extends Request {
@@ -148,9 +148,25 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
     return [key, order![key as keyof typeof order]]
   })
 
-  // TODO: body mapper helper for search & filters
+  // TODO: type filters through all project
+  const filtersConditions: WhereOptions = {}
 
-  let filtersConditions: WhereOptions = {}
+  if (filters) {
+    if (filters.createdAt) {
+      filtersConditions['createdAt'] = {}
+      if (filters.createdAt.from)
+        filtersConditions['createdAt'][Op.gt] = filters.createdAt.from
+      if (filters.createdAt.to)
+        filtersConditions['createdAt'][Op.lt] = filters.createdAt.to
+    }
+    if (filters.updatedAt) {
+      filtersConditions['updatedAt'] = {}
+      if (filters.updatedAt.from)
+        filtersConditions['updatedAt'][Op.gt] = filters.updatedAt.from
+      if (filters.updatedAt.to)
+        filtersConditions['updatedAt'][Op.lt] = filters.updatedAt.to
+    }
+  }
 
   if (search) {
     // TODO: fix Op as keys typing
@@ -162,13 +178,6 @@ export const userGet = async (req: UserGetRequest, res: Response) => {
       { email: { [Op.iLike]: `%${search}%` } },
     ]
   }
-
-  // TODO: make filters and typing
-  filtersConditions = Object.keys(filters ?? {}).reduce((acc, key) => {
-    console.log(filters?.[key as keyof typeof filters])
-    // acc[key] = filters?.[key as keyof typeof filters]
-    return acc
-  }, filtersConditions)
 
   const users = await User.findAll({
     order: orderConditions,

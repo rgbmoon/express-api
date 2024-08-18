@@ -7,6 +7,7 @@ import {
   Sequelize,
 } from 'sequelize'
 import { POSTGRES_URI } from '../constants/api.js'
+import { Post } from './post.js'
 
 const sequelize = new Sequelize(POSTGRES_URI)
 
@@ -63,3 +64,10 @@ export const User = sequelize.define<UserModel>(
     },
   }
 )
+
+User.hasMany(Post, {
+  foreignKey: 'userId',
+})
+Post.belongsTo(User, {
+  foreignKey: 'userId',
+})
