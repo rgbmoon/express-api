@@ -26,6 +26,8 @@ export interface PostModel
   }>
 }
 
+// TODO: add post creator column with user info
+
 export const Post = sequelize.define<PostModel>('Post', {
   id: {
     type: DataTypes.INTEGER,
