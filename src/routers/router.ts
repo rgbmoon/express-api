@@ -33,9 +33,8 @@ export const router = express.Router()
 // Session routes
 router.post('/login', validate(loginSchema), login)
 
-// TODO: authorizeAdmin middleware add, add userId in admin request schemas
-
 // User routes
+// TODO: authorizeAdmin middleware add to user routes
 router.post(
   '/users',
   [authorize, validate(userCreateSchema), uploadImg],

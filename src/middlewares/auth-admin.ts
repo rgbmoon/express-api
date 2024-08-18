@@ -12,6 +12,8 @@ export const authorizeAdmin = async (
       body: { userId },
     } = req
 
+    // TODO get userId from JWT token instead of userId
+
     const user = await User.findByPk(userId)
 
     if (!user) {
