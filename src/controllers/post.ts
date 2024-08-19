@@ -137,6 +137,11 @@ export const postGet = async (req: PostGetRequest, res: Response) => {
     // TODO: test pagination
     limit: limit ? Number(limit) : undefined,
     offset: offset ? Number(offset) : undefined,
+    include: {
+      model: User,
+      as: 'creator',
+      attributes: ['email', 'firstName', 'lastName'],
+    },
   })
 
   return res.json(posts)
